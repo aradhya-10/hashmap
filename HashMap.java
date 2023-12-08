@@ -47,6 +47,20 @@ class MyHashTable<K, V> {
 
         bucket.add(new MyMapNode<>(key, value));
     }
+    
+	public void remove(K key) {
+        int index = getHash(key);
+        LinkedList<MyMapNode<K, V>> bucket = buckets[index];
+
+        for (MyMapNode<K, V> node : bucket) {
+            if (node.getKey().equals(key)) {
+                bucket.remove(node);
+                return;
+            }
+        }
+
+		System.out.println("Word not present.");
+    }
 
     public V get(K key) {
         int index = getHash(key);
@@ -72,25 +86,44 @@ class MyHashTable<K, V> {
 }
 
 public class HashMap {
-    public static void main(String[] args) {
-        // String sentence1 = "To be or not to be";
-		String sentence2 = "Paranoids are not paranoid because they are paranoid but because they keep putting themselves deliberately into paranoid avoidable situations";
 
-        String[] words = sentence2.split(" ");
-
+	public static void getFrequencies(String sentence){
+		String[] words = sentence.split(" ");
+		
         MyHashTable<String, Integer> wordFrequency = new MyHashTable<>(10);
 		
-		System.out.println("Input: "+ sentence2);
+		System.out.println("Input: "+ sentence);
         for (String word : words) {
 			word = word.toLowerCase();
             Integer frequency = wordFrequency.get(word);
             if (frequency == null) {
-                wordFrequency.put(word, 1);
+				wordFrequency.put(word, 1);
             } else {
-                wordFrequency.put(word, frequency + 1);
+				wordFrequency.put(word, frequency + 1);
             }
         }
-
+		
 		wordFrequency.printMap();
+	}
+	
+	public static String removeWord(String sentence, String wordToRemove){
+		System.out.println("\nParagraph after removing '" + wordToRemove + "':");
+		String[] words = sentence.split(" ");
+		String newSentence = "";
+
+        for (String word : words) {
+            if (!word.equals(wordToRemove)) {
+                newSentence = newSentence + word + " ";
+            }
+        }
+		return newSentence;
+	}
+    public static void main(String[] args) {
+        // String sentence = "To be or not to be";
+		String sentence = "Paranoids are not paranoid because they are paranoid but because they keep putting themselves deliberately into paranoid avoidable situations";
+
+        getFrequencies(sentence);
+		sentence = removeWord(sentence, "avoidable");
+        getFrequencies(sentence);
     }
 }
