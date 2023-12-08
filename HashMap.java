@@ -73,11 +73,14 @@ class MyHashTable<K, V> {
 
 public class HashMap {
     public static void main(String[] args) {
-        String sentence = "To be or not to be";
-        String[] words = sentence.split(" ");
+        // String sentence1 = "To be or not to be";
+		String sentence2 = "Paranoids are not paranoid because they are paranoid but because they keep putting themselves deliberately into paranoid avoidable situations";
+
+        String[] words = sentence2.split(" ");
 
         MyHashTable<String, Integer> wordFrequency = new MyHashTable<>(10);
-
+		
+		System.out.println("Input: "+ sentence2);
         for (String word : words) {
 			word = word.toLowerCase();
             Integer frequency = wordFrequency.get(word);
